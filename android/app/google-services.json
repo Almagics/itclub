@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "946965063054",
+    "project_id": "itclub-892e4",
+    "storage_bucket": "itclub-892e4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:946965063054:android:421489dd7ee1af7f9af0df",
+        "android_client_info": {
+          "package_name": "com.itclub.itclub"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2DOSyCCAm8sAoUDQ_uNF77wPTQCVal0k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
