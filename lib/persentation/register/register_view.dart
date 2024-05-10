@@ -247,7 +247,7 @@ class _RegisterViewState extends State<RegisterView> {
 
 
 
-      Navigator.pushReplacementNamed(context, Routes.mainRoute);
+      Navigator.pushReplacementNamed(context, Routes.newhome);
 
 
 
