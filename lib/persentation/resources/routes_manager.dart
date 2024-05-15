@@ -4,6 +4,7 @@ import 'package:itclub/persentation/Main/main_view.dart';
 import 'package:itclub/persentation/appbar_bottom/bottomNavNew.dart';
 import 'package:itclub/persentation/forget_password/forget_password_view.dart';
 import 'package:itclub/persentation/login/login_View.dart';
+import 'package:itclub/persentation/material/materialList_View.dart';
 import 'package:itclub/persentation/profile/pofile_info.dart';
 import 'package:itclub/persentation/register/register_view.dart';
 import 'package:itclub/persentation/resources/strings_manager.dart';
@@ -25,6 +26,8 @@ class Routes {
   static const String profile = "/profile";
 
   static const String forgetpassword = "/forgetpassword";
+
+  static const  String materialList = "/materialList";
 }
 
 class RouteGenerator {
@@ -60,6 +63,9 @@ class RouteGenerator {
 
       case Routes.forgetpassword:
         return MaterialPageRoute(builder: (_) =>  ForgetPasswordView());
+
+      case Routes.materialList:
+        return MaterialPageRoute(builder: (_) =>  MaterialListView());
 
 
 

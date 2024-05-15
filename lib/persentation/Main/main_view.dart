@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:itclub/data/firebase_auth/firebase_auth_service.dart';
+import 'package:itclub/persentation/post/AddPostView.dart';
+import 'package:itclub/persentation/post/PostListView.dart';
 
 import '../appbar_bottom/navBottomWighget.dart';
 
@@ -102,6 +104,7 @@ mainAxisAlignment: MainAxisAlignment.center,
                       },
                     ),
                     GestureDetector(
+
                       child: Card(
                         elevation: 4.0,
                         margin: const EdgeInsets.all(16.0),
@@ -140,7 +143,10 @@ mainAxisAlignment: MainAxisAlignment.center,
 
                 ),
                       onTap: (){
-                      //  Navigator.pushReplacementNamed(context, Routes.designers);
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (ctx) => PostListView()));
                       },
                     )
 ]),
@@ -196,7 +202,7 @@ mainAxisAlignment: MainAxisAlignment.center,
                         ),
                         onTap: (){
 
-                          //  Navigator.pushReplacementNamed(context, Routes.store);
+                            Navigator.pushReplacementNamed(context, Routes.materialList);
                         },
                       ),
 

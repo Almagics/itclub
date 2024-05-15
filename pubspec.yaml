@@ -40,6 +40,13 @@ dependencies:
   firebase_auth: ^4.10.0
   cloud_firestore: ^4.9.2
   curved_navigation_bar: ^1.0.3
+  firebase_storage: any
+  image_picker: any
+  file_picker: ^8.0.3
+  uuid: ^4.4.0
+  dio: ^5.4.3+1
+  path_provider: ^2.1.3
+  permission_handler: ^11.3.1
 
 dev_dependencies:
   flutter_test:
