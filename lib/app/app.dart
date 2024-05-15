@@ -24,7 +24,8 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       onGenerateRoute: RouteGenerator.getRoute,
       debugShowCheckedModeBanner: false,
-      initialRoute: Routes.splashRoute,
+      // start page
+      initialRoute: Routes.newhome,
       theme: getApplicationTheme(),);
   }
 }

@@ -177,7 +177,7 @@ class _LoginViewState extends State<LoginView> {
     User? user = await _auth.signInWithEmailAndPassword(email, password);
 
 
-
+    Navigator.pushReplacementNamed(context, Routes.newhome);
 
 
     if(user!= null){
