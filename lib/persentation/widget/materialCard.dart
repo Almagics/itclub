@@ -32,7 +32,7 @@ class MaterialCardWithImageAndText extends StatelessWidget {
             Image(
               image: NetworkImage(item.imgUrl),
               width: double.infinity,
-              height: 150.0,
+              height: MediaQuery.of(context).size.height * 0.17,
 
               fit: BoxFit.cover,
               //  fit: BoxFit.cover,
@@ -46,7 +46,7 @@ class MaterialCardWithImageAndText extends StatelessWidget {
 
 
                 Container(
-                  padding: EdgeInsets.all(16.0),
+                  padding: EdgeInsets.all(5.0),
                   child: Center(
                     child: Text(
                       item.name,

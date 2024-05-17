@@ -51,7 +51,7 @@ class _MainViewState extends State<MainView> {
               children: <Widget>[
 
 
-                Container(child: const Center(child: Image(image: AssetImage(ImageAssets.logo), height: 150,width: 150,))),
+                Container(child: const Center(child: Image(image: AssetImage(ImageAssets.logo), height: 100,width: 100,))),
                 Text("Itclub",style: Theme.of(context).textTheme.headlineLarge,),
 
 
@@ -74,10 +74,10 @@ mainAxisAlignment: MainAxisAlignment.center,
                             ClipRRect(
                               borderRadius: const BorderRadius.vertical(top: Radius.circular(12.0)),
                               child: SizedBox(width: MediaQuery.of(context).size.width * 0.4,
-                                child: const Image(
+                                child:  Image(
                                   image: AssetImage(ImageAssets.card1),
                                   width: double.infinity,
-                                  height: 150.0,
+                                  height: MediaQuery.of(context).size.height * 0.17,
 
                                   fit: BoxFit.cover,
                                 ),
@@ -121,10 +121,10 @@ mainAxisAlignment: MainAxisAlignment.center,
                              ClipRRect(
                               borderRadius: const BorderRadius.vertical(top: Radius.circular(12.0)),
                               child: SizedBox(width: MediaQuery.of(context).size.width * 0.4,
-                                child: const Image(
+                                child:  Image(
                                    image: AssetImage(ImageAssets.card2),
                                   width: double.infinity,
-                                  height: 150.0,
+                                  height: MediaQuery.of(context).size.height * 0.17,
 
                                   fit: BoxFit.cover,
                                 ),
@@ -177,10 +177,10 @@ mainAxisAlignment: MainAxisAlignment.center,
                                 child: ClipRRect(
                                   borderRadius: const BorderRadius.vertical(top: Radius.circular(12.0)),
                                   child: SizedBox(width: MediaQuery.of(context).size.width * 0.4,
-                                    child: const Image(
+                                    child:  Image(
                                       image: AssetImage(ImageAssets.card3),
                                       width: double.infinity,
-                                      height: 150.0,
+                                      height: MediaQuery.of(context).size.height * 0.17,
                                 
                                       fit: BoxFit.cover,
                                     ),
