@@ -4,6 +4,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:itclub/data/firebase_auth/userModel.dart';
 import 'package:itclub/persentation/resources/strings_manager.dart';
 import 'package:itclub/persentation/resources/values_manager.dart';
 
@@ -99,8 +100,8 @@ class _LoginViewState extends State<LoginView> {
                       child: ElevatedButton(
                         onPressed: () {
                           //pageController.animateToPage(getNextIndex, duration: const Duration(microseconds: AppConstants.splashDelay), curve: Curves.bounceInOut);
-                         Navigator.pushReplacementNamed(context, Routes.newhome);
-                          //_signin();
+                         //Navigator.pushReplacementNamed(context, Routes.newhome);
+                          _signin();
                         },
 
 
@@ -183,6 +184,23 @@ class _LoginViewState extends State<LoginView> {
     if(user!= null){
       print("User is successfully login");
 
+      UserModel? userinfo = await _auth.getUserInfoByEmail(
+          user?.email ?? '');
+
+
+      print('rooooool : ${userinfo?.role}');
+
+
+
+
+
+      // Store user information locally
+      await  _auth.storeUserInfoLocally(
+          user?.uid, user?.uid, user?.email,
+          userinfo?.fullName,
+          userinfo?.role
+
+      );
 
 
 

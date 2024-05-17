@@ -1,120 +1,107 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../resources/color_manager.dart';
-import '../resources/font_manager.dart';
 import '../resources/routes_manager.dart';
-import '../resources/strings_manager.dart';
-import '../resources/styles_manager.dart';
-import '../resources/values_manager.dart';
-import '../widget/app_text_form_filed.dart';
 
-
-
-class ForgetPasswordView extends StatefulWidget {
-  const ForgetPasswordView({super.key});
-
+class ResetPasswordScreen extends StatefulWidget {
   @override
-  State<ForgetPasswordView> createState() => _ForgetPasswordViewState();
+  _ResetPasswordScreenState createState() => _ResetPasswordScreenState();
 }
 
-class _ForgetPasswordViewState extends State<ForgetPasswordView> {
+class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
+  final _emailController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
+  void _resetPassword() async {
+    if (_formKey.currentState?.validate() ?? false) {
+      try {
+        await FirebaseAuth.instance.sendPasswordResetEmail(
+          email: _emailController.text.trim(),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Password reset email sent!'),
+          ),
+        );
+      } on FirebaseAuthException catch (e) {
+        String message;
+        switch (e.code) {
+          case 'user-not-found':
+            message = 'No user found for that email.';
+            break;
+          case 'invalid-email':
+            message = 'Invalid email address.';
+            break;
+          default:
+            message = 'An error occurred.';
+        }
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(message),
+          ),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return  Directionality(
-      textDirection: TextDirection.rtl,
-      child: Scaffold(
-
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back,color: ColorManager.primary,),
-            onPressed: () {
-              Navigator.pushReplacementNamed(context, Routes.loginRoute);// Navigate back to the previous screen
-            },
-          ),
-          systemOverlayStyle: SystemUiOverlayStyle(
-              statusBarColor: ColorManager.venus,
-              statusBarBrightness: Brightness.light
-          ),
-
-          elevation: 0.0,
-          title: Center(child: Text('Forget Password',style: Theme.of(context).textTheme.titleLarge,)),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back,color: ColorManager.primary,),
+          onPressed: () {
+            Navigator.pushReplacementNamed(context, Routes.loginRoute);// Navigate back to the previous screen
+          },
+        ),
+        systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarColor: ColorManager.venus,
+            statusBarBrightness: Brightness.light
         ),
 
-body:   Column(
-crossAxisAlignment: CrossAxisAlignment.start,
-
-
-  children: [
-
-      SizedBox(height: 50,),
-
-      Padding(
-
-        padding: const EdgeInsets.all(8.0),
-        child: Text("E-mail",style:
-
-          Theme.of(context).textTheme.titleLarge
-          ,
-        textAlign: TextAlign.right,
-        ),
+        elevation: 0.0,
+        title: Center(child: Text("Rest Password",style: Theme.of(context).textTheme.titleLarge,)),
       ),
-
-
-      Padding(padding: EdgeInsets.all(AppPadding.p8),
-          child: AppTextFormFiled(
-
-           // controller: firstNameController,
-            hintText: "Enter E-mail",
-          )
-      ),
-SizedBox(height: 20,),
-
-    Padding(
-      padding: const EdgeInsets.fromLTRB(3,0,3,0),
-      child: Center(
-        child: SizedBox(width: 380,height: 50,
-          child: ElevatedButton(
-            onPressed: () {
-              //pageController.animateToPage(getNextIndex, duration: const Duration(microseconds: AppConstants.splashDelay), curve: Curves.bounceInOut);
-              Navigator.pushReplacementNamed(context, Routes.loginRoute);
-            },
-
-
-            style: ElevatedButton.styleFrom(
-
-
-              textStyle: getRegularStyle(fontSize:FontSize.s15,color: ColorManager.grey2), backgroundColor: ColorManager.primary,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(AppSize.s8),
-
-
-
-
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextFormField(
+                controller: _emailController,
+                decoration: InputDecoration(labelText: 'Email'),
+                keyboardType: TextInputType.emailAddress,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your email';
+                  } else if (!RegExp(
+                      r'^[^@]+@[^@]+\.[^@]+') // Simple regex for email validation
+                      .hasMatch(value)) {
+                    return 'Please enter a valid email';
+                  }
+                  return null;
+                },
               ),
-
-              //elevation: 10.0,
-
-            ),
-            child:  Text("Continue",
-              style: TextStyle(color: ColorManager.white),
-
-            ),
-
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _resetPassword,
+                child: Text('Send Reset Email'),
+              ),
+            ],
           ),
         ),
-      ),
-    ),
-
-
-  ],
-
-
-),
       ),
     );
   }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    super.dispose();
+  }
 }
-
-

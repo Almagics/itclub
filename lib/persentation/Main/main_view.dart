@@ -7,7 +7,7 @@ import 'package:itclub/persentation/job/jobListView.dart';
 import 'package:itclub/persentation/post/AddPostView.dart';
 import 'package:itclub/persentation/post/PostListView.dart';
 
-import '../appbar_bottom/navBottomWighget.dart';
+
 
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';

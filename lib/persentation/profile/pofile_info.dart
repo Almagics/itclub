@@ -1,30 +1,94 @@
+import 'package:flutter/services.dart';
 
 import 'package:flutter/material.dart';
-import 'package:itclub/persentation/resources/color_manager.dart';
+import 'package:itclub/data/firebase_auth/userModel.dart';
 
-class Profile extends StatelessWidget {
-  //static const routeName = '/Profile5';
+import '../../data/firebase_auth/firebase_auth_service.dart';
+
+
+import '../resources/color_manager.dart';
+import '../resources/routes_manager.dart';
+
+
+
+
+
+class Profile extends StatefulWidget {
+  const Profile({Key? key}) : super(key: key);
+
+  @override
+  State<Profile> createState() => _ProfileState();
+}
+
+
+
+class _ProfileState extends State<Profile> {
+
+  final FirebaseAuthService userdata = FirebaseAuthService();
+  UserModel? data;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+
+  Future<void> fetchData() async {
+    var email = await userdata.getEmail();
+
+
+    print('email isssssssss : ${email}');
+
+
+    UserModel? newData = await userdata.getUserInfoByEmail(email!);
+
+
+    // new UserModel(address: "judah", email: 'user@mail.com', fullName: 'ahmed ali', password: 'ahmed@99', phoneNumber: '05632326996', role: 'user', username: 'user@mail.com', serviceType: '', gender: '');
+
+    setState(() {
+      data = newData;
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     double widthC = MediaQuery.of(context).size.width * 100;
     return Scaffold(
-        backgroundColor: Colors.grey.shade50,
-        body: SingleChildScrollView(
-          child: Directionality(
-            textDirection: TextDirection.rtl,
-            child: Column(
-              children: <Widget>[
 
-                _buildHeader(context, widthC),
+      backgroundColor: Colors.grey.shade50,
+      body: data != null
+          ?  SingleChildScrollView(
+        child: Directionality(
+          textDirection: TextDirection.ltr,
+          child: Column(
+            children: <Widget>[
 
-                SizedBox(height: 10.0),
+              _buildHeader(context, widthC),
+
+              SizedBox(height: 10.0),
 
 
-                _buildInfo(context, widthC),
-              ],
+              _buildInfo(context, widthC),
+            ],
+          ),
+        ),
+      )
+          :const Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Center(
+
+            child: Center(
+              child: CircularProgressIndicator(),
             ),
           ),
-        ));
+        ],
+      ),
+
+    );
   }
 
   Widget _buildHeader(BuildContext context, double width) {
@@ -58,7 +122,7 @@ class Profile extends StatelessWidget {
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(80),
                       child: Image.network(
-                          'https://i.picsum.photos/id/65/200/200.jpg',
+                          'https://firebasestorage.googleapis.com/v0/b/itclub-892e4.appspot.com/o/uploads%2Fimages%2F3135715.png?alt=media&token=4982a746-12ef-417a-afa3-820be50658f2',
                           width: 80,
                           height: 80,
                           fit: BoxFit.fill)),
@@ -68,100 +132,12 @@ class Profile extends StatelessWidget {
             ],
           ),
         ),
-        Container(
-            margin: const EdgeInsets.only(top: 210),
-            child: _buildInfoCard(context))
+
       ],
     );
   }
 
-  Widget _buildInfoCard(context) {
-    return Column(
-      children: <Widget>[
-        Container(
-          padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
-          child: Card(
-            elevation: 5.0,
-            color: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.only(
-                  top: 16.0, bottom: 16.0, right: 10.0, left: 10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Column(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'Posts',
-                        style: new TextStyle(
-                            fontSize: 18.0,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w400),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 6.0),
-                        child: Text(
-                          '15',
-                          style: TextStyle(
-                              fontSize: 18.0,
-                              color: Color(0Xffde6262),
-                              fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                    ],
-                  ),
-                  new Column(
-                    children: <Widget>[
-                      new Text(
-                        'Requests',
-                        style: new TextStyle(
-                            fontSize: 18.0,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w400),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 6.0),
-                        child: new Text(
-                          '3.5k',
-                          style: new TextStyle(
-                              fontSize: 18.0,
-                              color: Color(0Xffde6262),
-                              fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                    ],
-                  ),
-                  new Column(
-                    children: <Widget>[
-                      new Text(
-                        'Activity',
-                        style: new TextStyle(
-                            fontSize: 18.0,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w400),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 6.0),
-                        child: new Text(
-                          '150',
-                          style: new TextStyle(
-                              fontSize: 18.0,
-                              color: Color(0Xffde6262),
-                              fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
+
 
   Widget _buildMainInfo(BuildContext context, double width) {
     return Container(
@@ -170,20 +146,20 @@ class Profile extends StatelessWidget {
       alignment: AlignmentDirectional.center,
       child: Column(
         children: <Widget>[
-          Text('Test User',
+          Text(data!.fullName,
               style: TextStyle(
                   fontSize: 20,
                   color: Colors.teal,
                   fontWeight: FontWeight.bold)),
           SizedBox(height: 10),
-          Text('User',
+          Text(data!.role,
               style: TextStyle(
                   color: Colors.grey.shade50, fontStyle: FontStyle.italic))
         ],
       ),
     );
   }
-
+//hhh
   Widget _buildInfo(BuildContext context, double width) {
     return Container(
         padding: EdgeInsets.all(10),
@@ -201,7 +177,7 @@ class Profile extends StatelessWidget {
                       Icon(Icons.email, color: ColorManager.primary),
                       title: const Text("E-mail",
                           style: TextStyle(fontSize: 18, color: Colors.black)),
-                      subtitle: const Text("email@gmailc.com",
+                      subtitle:  Text(data!.email,
                           style:
                           TextStyle(fontSize: 15, color: Colors.black54)),
                     ),
@@ -210,14 +186,26 @@ class Profile extends StatelessWidget {
                     ListTile(
                       leading:
                       Icon(Icons.person, color: ColorManager.primary),
-                      title: Text("About",
+                      title: const Text("Info",
                           style: TextStyle(fontSize: 18, color: Colors.black)),
-                      subtitle: Text(
-                          "test user",
+                      subtitle:  Text(
+                          data!.role,
                           style:
                           TextStyle(fontSize: 15, color: Colors.black54)),
                     ),
+                    Divider(),
 
+                    ListTile(
+                      contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                      leading: Icon(Icons.exit_to_app,
+                          color: ColorManager.primary),
+                      title: const Text("LogOut",
+                          style: TextStyle(fontSize: 18, color: Colors.black)),
+                      subtitle: Text('',
+                          style:
+                          TextStyle(fontSize: 15, color: Colors.black54)),
+                    ),
                   ],
                 )
               ],
@@ -225,7 +213,13 @@ class Profile extends StatelessWidget {
           ),
         ));
   }
+
+
 }
+
+
+
+
 
 
 

@@ -8,6 +8,9 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:itclub/persentation/material/materialList_View.dart';
+import 'package:itclub/persentation/post/PostListView.dart';
+import 'package:itclub/persentation/profile/pofile_info.dart';
 import 'package:itclub/persentation/resources/assets_manager.dart';
 
 import '../Main/main_view.dart';
@@ -43,12 +46,12 @@ class _BottomNavBarDemoState extends State<BottomNavBarDemo> {
       case 0:
         return new MainView();
       case 1:
-        return new MainView();
+        return new PostListView();
       case 2:
-        return new MainView();
+        return new MaterialListView();
 
       case 3:
-        return new MainView();
+        return new Profile();
 
 
 
@@ -65,11 +68,12 @@ class _BottomNavBarDemoState extends State<BottomNavBarDemo> {
       _selectedIndex = index;
     });
   }
-  List<String> titleList = ["Home", "Career Resources", "Discussion Forums","Profile"];
+  List<String> titleList = ["Home", "Discussion Forums" "Career Resources","Profile"];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  AppBar(
+      appBar: _currentIndex == 0 ?  AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: ColorManager.venus,
 
         systemOverlayStyle: SystemUiOverlayStyle(
@@ -79,7 +83,7 @@ class _BottomNavBarDemoState extends State<BottomNavBarDemo> {
 
         elevation: 0.0,
         title: Center(child: Text(titleList[_currentIndex],style: Theme.of(context).textTheme.titleLarge,)),
-      ),
+      ):null,
       bottomNavigationBar: CurvedNavigationBar(
         //key: _bottomNavigationKey,
         index: 0,

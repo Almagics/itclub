@@ -62,7 +62,7 @@ class RouteGenerator {
 
 
       case Routes.forgetpassword:
-        return MaterialPageRoute(builder: (_) =>  ForgetPasswordView());
+        return MaterialPageRoute(builder: (_) =>  ResetPasswordScreen());
 
       case Routes.materialList:
         return MaterialPageRoute(builder: (_) =>  MaterialListView());

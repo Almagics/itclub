@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:itclub/data/firebase_auth/firebase_auth_service.dart';
 import 'package:itclub/data/material/materialModel.dart';
 import 'package:itclub/data/material/materialService.dart';
 import 'package:itclub/persentation/material/MaterialAddView.dart';
@@ -29,12 +30,25 @@ class MaterialListView extends StatefulWidget {
 class _MaterialListViewState extends State<MaterialListView> {
   final MaterialService _materialService = MaterialService();
 
+  final FirebaseAuthService _auth = FirebaseAuthService();
+
+
+  String? _userRole;
 
 
 
+  @override
+  void initState() {
+    super.initState();
+    _loadUserRole();
+  }
 
-
-
+  Future<void> _loadUserRole() async {
+    String? role = await _auth.getRole();
+    setState(() {
+      _userRole = role;
+    });
+  }
 
 
 
@@ -42,7 +56,7 @@ class _MaterialListViewState extends State<MaterialListView> {
   Widget build(BuildContext context) {
     return Scaffold(
 
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton:_userRole == 'admin' ? FloatingActionButton(
         onPressed: () {
 
           Navigator.pushReplacement(
@@ -54,7 +68,7 @@ class _MaterialListViewState extends State<MaterialListView> {
 
         child: Icon(Icons.add),
         backgroundColor: ColorManager.venus,
-      ),
+      ): null,
 
       appBar: AppBar(
         backgroundColor: Colors.white,

@@ -6,6 +6,7 @@ import 'package:itclub/data/material/materialModel.dart';
 import 'package:itclub/data/material/materialService.dart';
 import 'package:itclub/persentation/resources/color_manager.dart';
 import 'package:itclub/persentation/resources/routes_manager.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 class MaterialInfoView extends StatefulWidget {
@@ -20,6 +21,15 @@ final MaterialModel  data;
 class _MaterialInfoViewState extends State<MaterialInfoView> {
 
   final MaterialService _materialService = MaterialService();
+
+  void openLinkInBrowser(String url) async {
+    await launchUrl(Uri.parse(url));
+  }
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     double widthC = MediaQuery.of(context).size.width * 100;
@@ -205,9 +215,7 @@ class _MaterialInfoViewState extends State<MaterialInfoView> {
                         child: SizedBox(width: 380,height: 50,
                           child: ElevatedButton(
                             onPressed: () async {
-                              if (widget.data.fileurl != null) {
-                                await _materialService.downloadFile(widget.data.fileurl, widget.data.file_name) ;
-                              }
+                            openLinkInBrowser(widget.data.fileurl);
                             },
 
 
@@ -234,9 +242,7 @@ class _MaterialInfoViewState extends State<MaterialInfoView> {
                         child: SizedBox(width: 380,height: 50,
                           child: ElevatedButton(
                             onPressed: () async {
-                              if (widget.data.file_name2 != null) {
-                                await _materialService.downloadFile(widget.data.file_url2, widget.data.file_name2) ;
-                              }
+                              openLinkInBrowser(widget.data.file_url2);
                             },
 
 

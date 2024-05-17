@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:itclub/data/job/jobModel.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 
@@ -10,6 +12,27 @@ class JobCardWidget extends StatelessWidget {
 
 
   final JobModel item;
+
+
+  void openWhatsAppChat(String phoneNumber) async {
+    var contact = phoneNumber;
+    var androidUrl = "whatsapp://send?phone=$contact&text=Hi";
+    // var iosUrl = "https://wa.me/$contact?text=${Uri.parse('Hi, I need some help')}";
+
+
+
+    await launchUrl(Uri.parse(androidUrl));
+
+
+  }
+
+  void sendEmail(String emailAddress) async {
+    var emailUrl = "mailto:$emailAddress?subject=Subject&body=Body";
+
+    await launchUrl(Uri.parse(emailUrl));
+  }
+
+
 
 
 
@@ -87,7 +110,11 @@ class JobCardWidget extends StatelessWidget {
                             children: [
 
 
-                              Icon(Icons.call, color: Colors.red,size: 30,)
+                              GestureDetector(
+                                  onTap: (){
+                                    openWhatsAppChat(item.phone?? '');
+                                  },
+                                  child: Icon(Icons.call, color: Colors.red,size: 30,))
                             ],
                           ),
                         ),
@@ -110,7 +137,12 @@ class JobCardWidget extends StatelessWidget {
 
                                 },
 
-                                child: Icon(Icons.email, color: Colors.blue,size: 30,))
+                                child: GestureDetector(
+                                    onTap: (){
+                                      sendEmail(item.email?? '');
+                                    },
+
+                                    child: Icon(Icons.email, color: Colors.blue,size: 30,)))
                           ],
                         ),
                       )
