@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
 import 'package:flutter/material.dart';
@@ -195,16 +196,23 @@ class _ProfileState extends State<Profile> {
                     ),
                     Divider(),
 
-                    ListTile(
-                      contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                      leading: Icon(Icons.exit_to_app,
-                          color: ColorManager.primary),
-                      title: const Text("LogOut",
-                          style: TextStyle(fontSize: 18, color: Colors.black)),
-                      subtitle: Text('',
-                          style:
-                          TextStyle(fontSize: 15, color: Colors.black54)),
+                    GestureDetector(
+                      onTap: (){
+
+                        userdata.signOut();
+                        Navigator.pushReplacementNamed(context, Routes.loginRoute);
+                      },
+                      child: ListTile(
+                        contentPadding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                        leading: Icon(Icons.exit_to_app,
+                            color: ColorManager.primary),
+                        title: const Text("LogOut",
+                            style: TextStyle(fontSize: 18, color: Colors.black)),
+                        subtitle: Text('',
+                            style:
+                            TextStyle(fontSize: 15, color: Colors.black54)),
+                      ),
                     ),
                   ],
                 )
